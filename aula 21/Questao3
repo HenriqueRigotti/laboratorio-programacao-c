@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    char nome[50];
+    float salario;
+    int horasExtras;
+} Funcionario;
+
+int main() {
+    FILE *arquivo;
+    Funcionario f[5];
+    int qtd;
+    char linha[150];
+
+    do {
+        printf("Quantos funcionarios deseja registar (1 a 5)? ");
+        scanf("%d", &qtd);
+    } while (qtd < 1 || qtd > 5);
+
+   
+    arquivo = fopen("funcionarios.txt", "a");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o ficheiro!\n");
+        return 1;
+    }
+
+    for (int i = 0; i < qtd; i++) {
+        printf("\n--- Registo %d ---\n", i + 1);
+        printf("Nome: ");
+        scanf(" %[^\n]", f[i].nome);
+        
+        printf("Salario: ");
+        scanf("%f", &f[i].salario);
+        
+        printf("Horas Extras: ");
+        scanf("%d", &f[i].horasExtras);
+
+        fprintf(arquivo, "Nome: %s | Salario: %.2f | Horas Extras: %d\n", 
+                f[i].nome, f[i].salario, f[i].horasExtras);
+    }
+    fclose(arquivo);
+
+    arquivo = fopen("funcionarios.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao ler o ficheiro!\n");
+        return 1;
+    }
+
+    printf("\n=== Funcionarios Registados ===\n");
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        printf("%s", linha);
+    }
+
+    fclose(arquivo);
+    return 0;
+}
