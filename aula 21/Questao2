@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    FILE *arquivo;
+    int num;
+
+  
+    arquivo = fopen("numeros.txt", "w");
+    if (arquivo == NULL) {
+        printf("Erro ao criar o ficheiro!\n");
+        return 1;
+    }
+
+    for (int i = 0; i < 5; i++) {
+        printf("Introduza o %do numero inteiro: ", i + 1);
+        scanf("%d", &num);
+        fprintf(arquivo, "%d\n", num); // Grava um número por linha
+    }
+    fclose(arquivo);
+
+  
+    arquivo = fopen("numeros.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao ler o ficheiro!\n");
+        return 1;
+    }
+
+    printf("\nNumeros armazenados no ficheiro:\n");
+    while (fscanf(arquivo, "%d", &num) != EOF) {
+        printf("%d\n", num);
+    }
+
+    fclose(arquivo);
+    return 0;
+}
