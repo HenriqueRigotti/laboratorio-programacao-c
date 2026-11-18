@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    FILE *arquivo;
+    char nome[50];
+    int matricula;
+
+    arquivo = fopen("funcionarios.txt", "w");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o ficheiro!\n");
+        return 1;
+    }
+
+    for (int i = 0; i < 5; i++) {
+        printf("Funcionario %d\n", i + 1);
+        
+        printf("Nome: ");
+        scanf(" %[^\n]", nome); // Lê o nome completo incluindo espaços
+        
+        printf("Matricula: ");
+        scanf("%d", &matricula);
+
+        fprintf(arquivo, "Nome: %s | Matricula: %d\n", nome, matricula);
+        printf("\n");
+    }
+
+    fclose(arquivo);
+    printf("Dados gravados com sucesso em funcionarios.txt!\n");
+
+    return 0;
+}
